@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: One Love
+  description: Provision and deploy Wordpress blogging software
+  license: license (GPLv3)
+  min_ansible_version: 1.7
+  platforms:
+  - name: Debian
+    versions:
+    - wheezy
+  categories:
+  - web
+dependencies:
+  - { role: common }
