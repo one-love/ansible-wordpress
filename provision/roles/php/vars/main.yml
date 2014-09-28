@@ -1,0 +1,4 @@
+---
+php_packages:
+  - name: php5-fpm
+  - name: php5-mysql
