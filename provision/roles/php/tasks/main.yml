@@ -1,0 +1,25 @@
+---
+- name: install packages
+  sudo: yes
+  with_items: php_packages
+  apt:
+    pkg: "{{ item.name }}"
+    state: latest
+  notify:
+    - reload php-fpm
+
+- name: disable default pool
+  sudo: yes
+  file:
+    path: /etc/php5/fpm/pool.d/www.conf
+    state: absent
+  notify:
+    - reload php-fpm
+
+- name: ensure run directory exists
+  sudo: yes
+  file:
+    path: /var/run/php5-fpm
+    owner: "{{ webapp_user }}"
+    group: "{{ webapp_user }}"
+    state: directory

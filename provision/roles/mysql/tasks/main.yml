@@ -4,3 +4,5 @@
   apt:
     pkg: mysql-server
     state: latest
+  notify:
+    - restart mysql

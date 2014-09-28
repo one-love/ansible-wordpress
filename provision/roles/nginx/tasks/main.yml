@@ -6,6 +6,13 @@
   notify:
     - reload nginx
 
+- name: configure nginx user
+  sudo: yes
+  user:
+    name: nginx
+    groups: 'nginx,www-data'
+    state: present
+
 - name: remove default vhosts
   sudo: yes
   file:

@@ -2,16 +2,15 @@
   get_url:
     url: http://dev.mysql.com/get/mysql-apt-config_0.2.1-1debian7_all.deb
     dest: /tmp/mysql-apt-config.deb
-
-- name: preseed debconf
-  sudo: yes
-  template:
-    src: config.j2
-    dest: /tmp/config
+    sha256sum: 767095f43e4da15ecfd88c12711627648c8681d9336f3a1c44fc6ac82210579d
 
 - name: disable debconf questions for MySQL apt config
   sudo: yes
-  command: debconf-set-selections /tmp/config
+  debconf:
+    name: mysql-apt-config
+    question: mysql-apt-config/enable-repo
+    vtype: select
+    value: mysql-5.6
 
 - name: install MySQL apt config
   sudo: yes

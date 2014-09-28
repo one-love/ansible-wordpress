@@ -13,5 +13,6 @@ galaxy_info:
 dependencies:
   - { role: common }
   - { role: mysql }
+  - { role: php }
   - { role: nginx }
   - { role: users }
