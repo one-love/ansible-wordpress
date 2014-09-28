@@ -1,5 +1,5 @@
 ansible-wordpress
 =================
-[![Build Status](https://travis-ci.org/one-love/ansible-one-love.svg?branch=master)](https://travis-ci.org/one-love/ansible-one-love)
+[![Build Status](https://travis-ci.org/one-love/ansible-wordpress.svg?branch=master)](https://travis-ci.org/one-love/ansible-wordpress)
 
-One Love Ansible playbook
+Wordpress Ansible playbook
