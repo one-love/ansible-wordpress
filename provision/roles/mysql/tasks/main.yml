@@ -1,0 +1,6 @@
+---
+- name: install mysql-server
+  sudo: yes
+  apt:
+    pkg: mysql-server
+    state: latest
