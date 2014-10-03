@@ -41,6 +41,16 @@
     priv: wordpress.*:ALL
     state: present
 
+- name: configure php-fpm init script
+  sudo: yes
+  template:
+    src: init/php5-fpm.j2
+    dest: /etc/init.d/php5-fpm
+    owner: root
+    group: root
+  notify:
+    - reload php-fpm
+
 - name: configure php-fpm
   sudo: yes
   template:
