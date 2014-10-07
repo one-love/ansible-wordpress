@@ -49,7 +49,7 @@
     owner: root
     group: root
   notify:
-    - reload php-fpm
+    - restart php-fpm
 
 - name: configure php-fpm
   sudo: yes
@@ -59,7 +59,7 @@
     owner: root
     group: root
   notify:
-    - reload php-fpm
+    - restart php-fpm
 
 - name: configure nginx
   sudo: yes

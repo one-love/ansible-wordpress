@@ -23,3 +23,13 @@
     owner: "{{ webapp_user }}"
     group: "{{ webapp_user }}"
     state: directory
+
+- name: set php limits for upload
+  sudo: yes
+  template:
+    src: 99-limits.ini
+    dest: /etc/php5/conf.d/99-limits.ini
+    owner: root
+    group: root
+  notify:
+    - restart php-fpm
