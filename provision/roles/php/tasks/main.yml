@@ -6,7 +6,7 @@
     pkg: "{{ item.name }}"
     state: latest
   notify:
-    - reload php-fpm
+    - restart php-fpm
 
 - name: disable default pool
   sudo: yes
@@ -14,7 +14,7 @@
     path: /etc/php5/fpm/pool.d/www.conf
     state: absent
   notify:
-    - reload php-fpm
+    - restart php-fpm
 
 - name: ensure run directory exists
   sudo: yes
@@ -27,7 +27,7 @@
 - name: set php limits for upload
   sudo: yes
   template:
-    src: 99-limits.ini
+    src: 99-limits.ini.j2
     dest: /etc/php5/conf.d/99-limits.ini
     owner: root
     group: root
