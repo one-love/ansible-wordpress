@@ -6,3 +6,4 @@
     - include: roles/nginx/pre_tasks/main.yml
   roles:
     - wordpress
+    - piwik

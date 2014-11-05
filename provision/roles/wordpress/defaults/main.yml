@@ -1,7 +1,6 @@
 ---
 wordpress_version: 4.0
 wordpress_sha256_sum: 03a8437ca9ae14c9a7f6d4062672e9685d45e1aaad6c020af2673cb42a34c0ac
-wordpress_url: example.com
 wordpress_database: wordpress
 wordpress_password: Sekrit
 wordpress_db_host: localhost

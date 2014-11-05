@@ -1,0 +1,62 @@
+---
+- name: add DB for piwik
+  sudo: yes
+  mysql_db:
+    name: piwik
+    state: present
+
+- name: add DB user for piwik
+  sudo: yes
+  mysql_user:
+    name: piwik
+    password: "{{ piwik_password }}"
+    priv: piwik.*:ALL
+    state: present
+
+- name: download piwik
+  sudo: yes
+  get_url:
+    url: "http://builds.piwik.org/piwik-{{ piwik_version }}.tar.gz"
+    dest: "/var/cache/piwik-{{ piwik_version }}.tar.gz"
+    sha256sum: "{{ piwik_sha256_sum }}"
+
+- name: unpack piwik
+  sudo: yes
+  sudo_user: www-data
+  unarchive:
+    src: "/var/cache/piwik-{{ piwik_version }}.tar.gz"
+    dest: "/var/www/"
+    creates: "/var/www/piwik"
+    copy: no
+
+- name: configure php-fpm
+  sudo: yes
+  template:
+    src: php/piwik.conf.j2
+    dest: /etc/php5/fpm/pool.d/piwik.conf
+    owner: root
+    group: root
+  notify:
+    - restart php-fpm
+
+- name: configure nginx
+  sudo: yes
+  template:
+    src: nginx/piwik.conf
+    dest: /etc/nginx/sites-available/piwik.conf
+    owner: root
+    group: root
+  notify:
+    - reload nginx
+
+- name: enable piwik config in nginx
+  sudo: yes
+  file:
+    src: /etc/nginx/sites-available/piwik.conf
+    dest: /etc/nginx/sites-enabled/piwik.conf
+    owner: root
+    group: root
+    state: link
+  notify:
+    - reload nginx
+
