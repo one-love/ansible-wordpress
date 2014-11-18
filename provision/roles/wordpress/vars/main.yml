@@ -1,2 +1,4 @@
 ---
-# vars file for wordpress
+wordpress_vhosts:
+  - name: wordpress
+  - name: default

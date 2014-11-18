@@ -61,21 +61,23 @@
   notify:
     - restart php-fpm
 
-- name: configure nginx
+- name: configure wordpress nginx vhost
   sudo: yes
+  with_items: wordpress_vhosts
   template:
-    src: nginx/wordpress.conf
-    dest: /etc/nginx/sites-available/wordpress.conf
+    src: "nginx/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
     owner: root
     group: root
   notify:
     - reload nginx
 
-- name: enable wordpress config in nginx
+- name: enable wordpress nginx vhost
   sudo: yes
+  with_items: wordpress_vhosts
   file:
-    src: /etc/nginx/sites-available/wordpress.conf
-    dest: /etc/nginx/sites-enabled/wordpress.conf
+    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
     owner: root
     group: root
     state: link
