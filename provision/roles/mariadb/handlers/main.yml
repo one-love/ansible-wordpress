@@ -1,6 +1,6 @@
 ---
-- name: restart wordpress
+- name: restart mariadb
   sudo: yes
   service:
-    name: wordpress
+    name: mariadb
     state: restarted

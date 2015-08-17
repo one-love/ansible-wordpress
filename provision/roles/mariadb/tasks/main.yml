@@ -1,0 +1,21 @@
+---
+- name: add mariadb service
+  sudo: yes
+  template:
+    src: mariadb.service.j2
+    dest: /lib/systemd/system/mariadb.service
+    owner: root
+    group: root
+  notify:
+    - restart mariadb
+
+- name: reload systemd
+  sudo: yes
+  command: systemctl daemon-reload
+
+- name: start mariadb service
+  sudo: yes
+  service:
+    name: mariadb
+    enabled: yes
+    state: started

@@ -1,7 +1,0 @@
----
-- name: restart mysql
-  sudo: yes
-  service:
-    name: mysql
-    enabled: yes
-    state: restarted

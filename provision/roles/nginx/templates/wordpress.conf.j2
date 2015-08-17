@@ -1,0 +1,22 @@
+upstream wordpress {
+    server wordpress:9000;
+}
+
+
+server {
+    server_name _;
+    root /var/www/html;
+    index index.php;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    location / {
+        try_files $uri $uri/ index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass wordpress;
+    }
+}

@@ -2,8 +2,8 @@
   hosts: all
   pre_tasks:
     - include: roles/common/pre_tasks/main.yml
-    - include: roles/mysql/pre_tasks/main.yml
-    - include: roles/nginx/pre_tasks/main.yml
   roles:
+    - common
+    - mariadb
     - wordpress
-    - piwik
+    - nginx

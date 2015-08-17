@@ -1,0 +1,16 @@
+[Unit]
+Description=Wordpress
+After=networking.target
+Requires=networking.service mariadb.service
+Wants=networking.target
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill wordpress
+ExecStartPre=-/usr/bin/docker rm wordpress
+ExecStartPre=/usr/bin/docker pull wordpress:fpm
+ExecStart=/usr/bin/docker run -v /var/lib/docker/volumes/wordpress/html:/var/www/html -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=rLIyDW5tHXtVWMi8h2tue25l9xk6DlORpieMddOKi4MO6TorcM0GUuCecn0Yzori --name wordpress --link mariadb:mysql wordpress:fpm
+ExecStop=/usr/bin/docker stop wordpress
+
+[Install]
+WantedBy=multi-user.target

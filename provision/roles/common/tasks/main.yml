@@ -1,25 +1,22 @@
+---
 - name: update apt
   sudo: yes
   apt:
     update_cache: yes
 
-- name: update all packages to the latest version
+- name: install docker
   sudo: yes
   apt:
-    upgrade: dist
-
-- name: install packages
-  sudo: yes
-  with_items: common_packages
-  apt:
-    pkg: "{{ item.name }}"
+    name: docker.io
     state: latest
-  notify:
-    - restart openntpd
 
-- name: install pip packages
+- name: start docker
   sudo: yes
-  with_items: common_pip_packages
-  pip:
-    name: "{{ item.name }}"
-    state: present
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: reload systemd
+  sudo: yes
+  command: systemctl daemon-reload

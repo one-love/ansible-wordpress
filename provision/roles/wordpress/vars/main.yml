@@ -1,4 +1,0 @@
----
-wordpress_vhosts:
-  - name: wordpress
-  - name: default

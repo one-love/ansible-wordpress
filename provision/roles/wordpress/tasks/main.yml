@@ -1,93 +1,30 @@
 ---
-- name: download Wordpress
-  get_url:
-    url: "https://wordpress.org/wordpress-{{ wordpress_version }}.tar.gz"
-    dest: /tmp/wordpress.tar.gz
-    sha256sum: "{{ wordpress_sha256_sum }}"
-
-- name: install python-mysqldb
-  sudo: yes
-  apt:
-    pkg: python-mysqldb
-    state: latest
-
-- name: ensure /var/www/wordpress exists
+- name: create html directory
   sudo: yes
   file:
-    path: /var/www/wordpress
-    owner: "{{ webapp_user }}"
-    group: "{{ webapp_user }}"
+    path: /var/lib/docker/volumes/wordpress/html
+    owner: root
+    group: root
     state: directory
 
-- name: unpack Wordpress
+- name: add wordpress service
   sudo: yes
-  sudo_user: "{{ webapp_user }}"
-  unarchive:
-    src: /tmp/wordpress.tar.gz
-    dest: /var/www/wordpress
-    copy: no
+  template:
+    src: wordpress.service.j2
+    dest: /lib/systemd/system/wordpress.service
+    owner: root
+    group: root
+  notify:
+    - restart wordpress
+    - restart nginx
 
-- name: add DB for wordpress
+- name: reload systemd
   sudo: yes
-  mysql_db:
+  command: systemctl daemon-reload
+
+- name: start wordpress service
+  sudo: yes
+  service:
     name: wordpress
-    state: present
-
-- name: add DB user for wordpress
-  sudo: yes
-  mysql_user:
-    name: wordpress
-    password: "{{ wordpress_password }}"
-    priv: wordpress.*:ALL
-    state: present
-
-- name: configure php-fpm init script
-  sudo: yes
-  template:
-    src: init/php5-fpm.j2
-    dest: /etc/init.d/php5-fpm
-    owner: root
-    group: root
-  notify:
-    - restart php-fpm
-
-- name: configure php-fpm
-  sudo: yes
-  template:
-    src: php/wordpress.conf.j2
-    dest: /etc/php5/fpm/pool.d/wordpress.conf
-    owner: root
-    group: root
-  notify:
-    - restart php-fpm
-
-- name: configure wordpress nginx vhost
-  sudo: yes
-  with_items: wordpress_vhosts
-  template:
-    src: "nginx/{{ item.name }}.conf"
-    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
-    owner: root
-    group: root
-  notify:
-    - reload nginx
-
-- name: enable wordpress nginx vhost
-  sudo: yes
-  with_items: wordpress_vhosts
-  file:
-    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
-    owner: root
-    group: root
-    state: link
-  notify:
-    - reload nginx
-
-- name: configure wordpress variables
-  sudo: yes
-  template:
-    src: wordpress/wp-config.php.j2
-    dest: /var/www/wordpress/wordpress/wp-config.php
-    owner: "{{ webapp_user }}"
-    group: "{{ webapp_user }}"
+    enabled: yes
+    state: started

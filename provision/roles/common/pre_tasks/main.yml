@@ -1,20 +1,14 @@
-- name: set DNS servers
-  sudo: yes
-  template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
-    owner: root
-    group: root
-
+---
 - name: update apt
   sudo: yes
   apt:
     update_cache: yes
     cache_valid_time: 3600
 
-- name: install packages
+- name: add jessie-backports
   sudo: yes
-  with_items: common_pretask_packages
-  apt:
-    pkg: "{{ item.name }}"
-    state: latest
+  template:
+    src: jessie-backports.list.j2
+    dest: /etc/apt/sources.list.d/jessie-backports.list
+    owner: root
+    group: root
