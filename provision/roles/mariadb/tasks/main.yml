@@ -1,4 +1,12 @@
 ---
+- name: create data volume
+  sudo: yes
+  file:
+    path: /var/lib/docker/volumes/mariadb
+    owner: root
+    group: root
+    state: directory
+
 - name: add mariadb service
   sudo: yes
   template:
@@ -8,6 +16,8 @@
     group: root
   notify:
     - restart mariadb
+    - restart wordpress
+    - restart nginx
 
 - name: reload systemd
   sudo: yes

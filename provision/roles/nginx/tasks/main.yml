@@ -10,6 +10,16 @@
 - name: configure nginx
   sudo: yes
   template:
+    src: nginx.conf.j2
+    dest: /var/lib/docker/volumes/nginx/nginx.conf
+    owner: root
+    group: root
+  notify:
+    - restart nginx
+
+- name: configure for wordpress
+  sudo: yes
+  template:
     src: wordpress.conf.j2
     dest: /var/lib/docker/volumes/nginx/conf.d/wordpress.conf
     owner: root

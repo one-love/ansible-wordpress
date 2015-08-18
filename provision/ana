@@ -1,2 +1,2 @@
 [production]
-utiscisaputovanja.com
+utiscisaputovanja.com ansible_ssh_user=root
