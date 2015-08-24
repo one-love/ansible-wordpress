@@ -1,2 +1,2 @@
 [production]
-utiscisaputovanja.com ansible_ssh_user=root
+178.62.206.48 ansible_ssh_user=root

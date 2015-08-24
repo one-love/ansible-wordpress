@@ -1,4 +1,4 @@
-- name: One Love project provisioning
+- name: Utisci Sa Putovanja
   hosts: all
   pre_tasks:
     - include: roles/common/pre_tasks/main.yml

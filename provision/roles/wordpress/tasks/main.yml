@@ -7,6 +7,25 @@
     group: root
     state: directory
 
+- name: create conf.d directory
+  sudo: yes
+  file:
+    path: /var/lib/docker/volumes/wordpress/conf.d
+    owner: root
+    group: root
+    state: directory
+
+- name: configure php
+  sudo: yes
+  template:
+    src: custom.ini.j2
+    dest: /var/lib/docker/volumes/wordpress/conf.d/custom.ini
+    owner: root
+    group: root
+  notify:
+    - restart wordpress
+    - restart nginx
+
 - name: add wordpress service
   sudo: yes
   template:
