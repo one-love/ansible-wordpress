@@ -19,4 +19,14 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_pass wordpress;
     }
+
+    {% for referer in spam_referers %}
+if ($http_referer ~ "{{ referer }}") {
+        set $prohibited "1";
+    }
+    {% endfor %}
+
+    if ($prohibited) {
+          return 403;
+    }
 }

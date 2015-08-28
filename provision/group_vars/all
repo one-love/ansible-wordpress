@@ -1,1 +1,28 @@
 webapp_user: www-data
+spam_referers:
+  - buttons-for-website.com
+  - darodar.com
+  - econom.co
+  - ilovevitaly.co
+  - kambasoft.com
+  - lumb.co
+  - 7makemoneyonline.com
+  - ranksonic.info
+  - savetubevideo.info
+  - see-your-website-here.com
+  - semalt.com
+  - priceg.com
+  - srecorder.com
+  - descargar-musica-gratis.net
+  - 54.186.60.77
+  - lomb.co
+  - axisalternativementalhealthsharebutton.net
+  - torontoplumbinggroup.com
+  - tasteidea.com
+  - paparazzistudios.com.au
+  - 76brighton.co.uk
+  - powitania.pl
+  - ilovevitaly.ru
+  - ilovevitaly.com
+  - blackhatworth.com
+  - hulfingtonpost.com
