@@ -1,3 +1,4 @@
 ---
 php_upload_max_filesize: 10M
 php_post_max_size: 10M
+wordpress_volume: /var/lib/docker/volumes/wordpress/html
